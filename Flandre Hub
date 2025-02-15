@@ -1,0 +1,94 @@
+-- Flandre MemeAdventure NoCd Hub
+-- script by 54hz
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- Tạo GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.ResetOnSpawn = false  -- Giữ GUI khi nhân vật reset
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 250, 0, 180)
+frame.Position = UDim2.new(0.5, -125, 0.5, -90)
+frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+frame.Active = true
+frame.Draggable = true
+frame.Parent = screenGui
+frame.BorderSizePixel = 0
+frame.BackgroundTransparency = 0.1
+frame.ClipsDescendants = true
+
+local UICornerFrame = Instance.new("UICorner")
+UICornerFrame.CornerRadius = UDim.new(0, 12)
+UICornerFrame.Parent = frame
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0.18, 0)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.Text = "Flandre MemeAdventure NoCd Hub\nscript by 54hz"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.TextScaled = false
+titleLabel.TextSize = 14
+titleLabel.Parent = frame
+
+local textBox = Instance.new("TextBox")
+textBox.Size = UDim2.new(0.8, 0, 0.14, 0)
+textBox.Position = UDim2.new(0.1, 0, 0.2, 0)
+textBox.PlaceholderText = "Nhập vật phẩm"
+textBox.TextScaled = true
+textBox.Font = Enum.Font.Gotham
+textBox.Parent = frame
+
+local UICornerTextBox = Instance.new("UICorner")
+UICornerTextBox.CornerRadius = UDim.new(0, 10)
+UICornerTextBox.Parent = textBox
+
+local function executeScript(itemName, skillLevel)
+    task.spawn(function()
+        while wait() do
+            workspace[player.Name][itemName][skillLevel].RemoteEvent2:FireServer()
+        end
+    end)
+    
+    task.spawn(function()
+        while wait() do
+            workspace[player.Name][itemName][skillLevel].RemoteEvent:FireServer()
+        end
+    end)
+end
+
+local buttonHeight = 0.14
+local buttonSpacing = 0.02
+
+local function createButton(position, text, color, skillLevel)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0.8, 0, buttonHeight, 0)
+    button.Position = position
+    button.Text = text
+    button.BackgroundColor3 = color
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Font = Enum.Font.GothamBold
+    button.TextScaled = true
+    button.Parent = frame
+    
+    local UICornerButton = Instance.new("UICorner")
+    UICornerButton.CornerRadius = UDim.new(0, 10)
+    UICornerButton.Parent = button
+    
+    button.MouseButton1Click:Connect(function()
+        local itemName = textBox.Text
+        if itemName and itemName ~= "" then
+            executeScript(itemName, skillLevel)
+        end
+    end)
+    
+    return button
+end
+
+createButton(UDim2.new(0.1, 0, 0.38, 0), "Execute Skill 1", Color3.fromRGB(70, 130, 255), "1")
+createButton(UDim2.new(0.1, 0, 0.38 + buttonHeight + buttonSpacing, 0), "Execute Skill 2", Color3.fromRGB(50, 205, 50), "2")
+createButton(UDim2.new(0.1, 0, 0.38 + (buttonHeight + buttonSpacing) * 2, 0), "Execute Skill 3", Color3.fromRGB(255, 69, 69), "3")
