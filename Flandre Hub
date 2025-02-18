@@ -1,94 +1,85 @@
--- Flandre MemeAdventure NoCd Hub
--- script by 54hz
+local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
+ 
+local Window = Library:NewWindow("flandre hub no cd")
 
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+local Section = Window:NewSection("nocd")
 
--- Tạo GUI
-local screenGui = Instance.new("ScreenGui")
-screenGui.ResetOnSpawn = false  -- Giữ GUI khi nhân vật reset
-screenGui.Parent = player:WaitForChild("PlayerGui")
+Section:CreateButton("how to use👇", function()
+print("Clicked")
+end)
 
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 250, 0, 180)
-frame.Position = UDim2.new(0.5, -125, 0.5, -90)
-frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-frame.Active = true
-frame.Draggable = true
-frame.Parent = screenGui
-frame.BorderSizePixel = 0
-frame.BackgroundTransparency = 0.1
-frame.ClipsDescendants = true
+Section:CreateButton("change item and hold item u wand no cd", function()
+print("Clicked")
+end)
 
-local UICornerFrame = Instance.new("UICorner")
-UICornerFrame.CornerRadius = UDim.new(0, 12)
-UICornerFrame.Parent = frame
+Section:CreateToggle("auto use skill 1", function(value)
+getgenv().AutoUseTool = value -- Biến để bật/tắt script
 
-local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(1, 0, 0.18, 0)
-titleLabel.Position = UDim2.new(0, 0, 0, 0)
-titleLabel.Text = "Flandre MemeAdventure NoCd Hub\nscript by 54hz"
-titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-titleLabel.BackgroundTransparency = 1
-titleLabel.Font = Enum.Font.GothamBold
-titleLabel.TextScaled = false
-titleLabel.TextSize = 14
-titleLabel.Parent = frame
+spawn(function()
+    while AutoUseTool do
+        local player = game.Players.LocalPlayer
+        local char = player.Character
 
-local textBox = Instance.new("TextBox")
-textBox.Size = UDim2.new(0.8, 0, 0.14, 0)
-textBox.Position = UDim2.new(0.1, 0, 0.2, 0)
-textBox.PlaceholderText = "Nhập vật phẩm"
-textBox.TextScaled = true
-textBox.Font = Enum.Font.Gotham
-textBox.Parent = frame
-
-local UICornerTextBox = Instance.new("UICorner")
-UICornerTextBox.CornerRadius = UDim.new(0, 10)
-UICornerTextBox.Parent = textBox
-
-local function executeScript(itemName, skillLevel)
-    task.spawn(function()
-        while wait() do
-            workspace[player.Name][itemName][skillLevel].RemoteEvent2:FireServer()
+        if char and char:FindFirstChildOfClass("Tool") then
+            local tool = char:FindFirstChildOfClass("Tool")
+            if tool:FindFirstChild("1") and tool["1"]:FindFirstChild("RemoteEvent") then
+                tool["1"].RemoteEvent:FireServer()
+            end
         end
-    end)
-    
-    task.spawn(function()
-        while wait() do
-            workspace[player.Name][itemName][skillLevel].RemoteEvent:FireServer()
+
+        wait(0.1) -- Giảm thời gian chờ nếu muốn tốc độ kích hoạt nhanh hơn
+    end
+end)
+
+print(value)
+end)
+
+Section:CreateToggle("auto use skill 2", function(value)
+getgenv().AutoUseTool = value -- Biến để bật/tắt script
+
+spawn(function()
+    while AutoUseTool do
+        local player = game.Players.LocalPlayer
+        local char = player.Character
+
+        if char and char:FindFirstChildOfClass("Tool") then
+            local tool = char:FindFirstChildOfClass("Tool")
+            if tool:FindFirstChild("2") and tool["2"]:FindFirstChild("RemoteEvent") then
+                tool["2"].RemoteEvent:FireServer()
+            end
         end
-    end)
-end
 
-local buttonHeight = 0.14
-local buttonSpacing = 0.02
+        wait(0.1) -- Giảm thời gian chờ nếu muốn tốc độ kích hoạt nhanh hơn
+    end
+end)
 
-local function createButton(position, text, color, skillLevel)
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0.8, 0, buttonHeight, 0)
-    button.Position = position
-    button.Text = text
-    button.BackgroundColor3 = color
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Font = Enum.Font.GothamBold
-    button.TextScaled = true
-    button.Parent = frame
-    
-    local UICornerButton = Instance.new("UICorner")
-    UICornerButton.CornerRadius = UDim.new(0, 10)
-    UICornerButton.Parent = button
-    
-    button.MouseButton1Click:Connect(function()
-        local itemName = textBox.Text
-        if itemName and itemName ~= "" then
-            executeScript(itemName, skillLevel)
+print(value)
+end)
+
+Section:CreateToggle("auto use skill 3", function(value)
+getgenv().AutoUseTool = value -- Biến để bật/tắt script
+
+spawn(function()
+    while AutoUseTool do
+        local player = game.Players.LocalPlayer
+        local char = player.Character
+
+        if char and char:FindFirstChildOfClass("Tool") then
+            local tool = char:FindFirstChildOfClass("Tool")
+            if tool:FindFirstChild("3") and tool["3"]:FindFirstChild("RemoteEvent") then
+                tool["3"].RemoteEvent:FireServer()
+            end
         end
-    end)
-    
-    return button
-end
 
-createButton(UDim2.new(0.1, 0, 0.38, 0), "Execute Skill 1", Color3.fromRGB(70, 130, 255), "1")
-createButton(UDim2.new(0.1, 0, 0.38 + buttonHeight + buttonSpacing, 0), "Execute Skill 2", Color3.fromRGB(50, 205, 50), "2")
-createButton(UDim2.new(0.1, 0, 0.38 + (buttonHeight + buttonSpacing) * 2, 0), "Execute Skill 3", Color3.fromRGB(255, 69, 69), "3")
+        wait(0.1) -- Giảm thời gian chờ nếu muốn tốc độ kích hoạt nhanh hơn
+    end
+end)
+
+print(value)
+end)
+
+local Section = Window:NewSection("credits")
+
+Section:CreateButton("script by 54hz", function()
+print("Clicked")
+end)
